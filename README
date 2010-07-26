@@ -2,3 +2,6 @@ This is source to a pre-fork model WWW server written in C++.  It
 links against the latest builds of SpiderMonkey and provides a
 server-side JavaScript environment.
 
+Project is edited with NetBeans.
+
+

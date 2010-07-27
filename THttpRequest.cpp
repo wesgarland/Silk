@@ -35,6 +35,8 @@ bool THttpRequest::ParseRequest(TSocket *s) {
     *dst = '\0';
     protocol = new char[strlen(buf) + 1];
     strcpy(protocol, buf);
+
+    return true;
 }
 
 bool THttpRequest::ParseHeaders(TSocket *s) {

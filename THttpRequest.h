@@ -14,12 +14,12 @@ protected:
 protected:
     THeaderList headers;
     THeaderList env;
-protected:
+public:
     char *method;
     char *uri;
     char *protocol;
-    char firstLine[512];
 protected:
+    char firstLine[512];
     bool ParseRequest(TSocket *s);
     bool ParseHeaders(TSocket *s);
 public:

@@ -60,30 +60,23 @@ TInterpreter::~TInterpreter() {
 char *TInterpreter::Run(THttpRequest *req, THttpResponse *res) {
     // Set up global req object for JavaScript
     JSObject *jsReq = NewObject();
+#ifdef GPSEE
+    JSObject *globalObject = realm->globalObject;
+#endif
+    
     SetProperty(jsReq, "abc", "testing req");
     SetProperty(jsReq, "headers", req->GetObjectJS(ctx));
-#ifndef GPSEE
     SetProperty(globalObject, "req", jsReq);
-#else
-    SetProperty(realm->globalObject, "req", jsReq);
-#endif
+    SetProperty(jsReq, "uri", req->uri);
 
     // Set up global res object for JavaScript
     JSObject *jsRes = NewObject();
     JS_SetContextPrivate(ctx, res);
     JSFunction *w = JS_DefineFunction(ctx, jsRes, "write", TInterpreter::Write, 2, 0);
-#ifndef GPSEE
     SetProperty(globalObject, "res", jsRes);
-#else
-    SetProperty(realm->globalObject, "res", jsRes);
-#endif
 
     jsval rval;
-#ifndef GPSEE
     JS_EvaluateScript(ctx, globalObject, jsfile, strlen(jsfile), "eval", 0, &rval);
-#else
-    JS_EvaluateScript(ctx, realm->globalObject, jsfile, strlen(jsfile), "eval", 0, &rval);
-#endif
 
     return JS_GetStringBytes(JS_ValueToString(ctx, rval));
 }

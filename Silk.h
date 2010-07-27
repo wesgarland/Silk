@@ -29,8 +29,12 @@
 #include <sys/file.h>
 
 // SpiderMonkey
+#ifndef GPSEE
 #define XP_UNIX
 #include <js/jsapi.h>
+#else
+#include <gpsee.h>
+#endif
 
 #include "Util.h"
 

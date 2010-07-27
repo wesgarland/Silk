@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
+#include <strings.h> /* bzero */
 #include <ctype.h>
 #include <time.h>
 

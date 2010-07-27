@@ -17,16 +17,23 @@ class TInterpreter {
 public:
     static char * jsfile;
 protected:
+#ifndef GPSEE
     static JSClass globalClass;
     static JSRuntime *rt;
-    JSContext *ctx;
     JSObject *globalObject;
+#else
+    static gpsee_runtime_t     *grt;
+    gpsee_realm_t               *realm;
+#endif
+    JSContext *ctx;
+
     static void reportError(JSContext *cx, const char *message, JSErrorReport *report);
 public:
     TInterpreter();
     virtual ~TInterpreter();
     JSContext *GetContext();
     void ReleaseContext(JSContext *ctx);
+
     char *Run(THttpRequest *req, THttpResponse *res);
 public:
     // SpiderMonkey helper functions

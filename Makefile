@@ -14,10 +14,12 @@ top: $(EXPORT_PROGS)
 
 include $(shell $(GPSEE_CONFIG) --outside.mk)
 
-LDFLAGS += $(shell $(GPSEE_CONFIG) --ldflags)
-CXXFLAGS += $(CPPFLAGS)
+CC		= $(shell $(GPSEE_CONFIG) --cc)
+CXX		= $(shell $(GPSEE_CONFIG) --cxx)
+LDFLAGS 	+= $(shell $(GPSEE_CONFIG) --ldflags)
+CXXFLAGS 	+= $(CPPFLAGS) -DNOTHREADS
 
-silk: LOADLIBES += -lstdc++
+silk: LOADLIBES += -lstdc++ -lresolv
 silk: $(SILK_OBJS)
 
 clean: OBJS := $(SILK_OBJS)

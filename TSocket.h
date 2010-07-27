@@ -31,7 +31,7 @@ public:
 public:
     bool Write(const unsigned char *data, int len);
     bool WriteLine(const char *s) {
-        Write((unsigned char*)s, strlen(s));
+        return Write((unsigned char*)s, strlen(s));
     }
     bool ReadLine(char *line);
     int Read();

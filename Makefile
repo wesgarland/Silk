@@ -6,7 +6,7 @@ endif
 SILK_PREFIX  	?= /opt/local/silk
 BIN_DIR		?= $(SILK_PREFIX)/bin
 
-SILK_OBJS = 	silk.o THeader.o THttpChild.o THttpRequest.o THttpResponse.o TInterpreter.o \
+OBJS 	     = 	silk.o THeader.o THttpChild.o THttpRequest.o THttpResponse.o TInterpreter.o \
 		TOutputBuffer.o TServerSocket.o TSocket.o Util.o
 EXPORT_PROGS =	silk
 
@@ -17,9 +17,7 @@ include $(shell $(GPSEE_CONFIG) --outside.mk)
 CC		= $(shell $(GPSEE_CONFIG) --cc)
 CXX		= $(shell $(GPSEE_CONFIG) --cxx)
 LDFLAGS 	+= $(shell $(GPSEE_CONFIG) --ldflags)
-CXXFLAGS 	+= $(CPPFLAGS) -DNOTHREADS
+CXXFLAGS 	+= $(CPPFLAGS)
 
 silk: LOADLIBES += -lstdc++ -lresolv
-silk: $(SILK_OBJS)
-
-clean: OBJS := $(SILK_OBJS)
+silk: $(OBJS)

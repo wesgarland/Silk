@@ -11,7 +11,7 @@ TServerSocket::TServerSocket(int port) {
 
   {
     int on = 1;
-    setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
+    setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (char *)&on, sizeof(on));
     //    setsockopt(fd, SOL_SOCKET, SO_REUSEPORT, (char *)&on, sizeof(on));
   }
   struct sockaddr_in my_addr;
@@ -19,13 +19,13 @@ TServerSocket::TServerSocket(int port) {
   my_addr.sin_family = AF_INET;
   my_addr.sin_port = htons(port);
   my_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-  if (bind(fd, (struct sockaddr *)&my_addr, sizeof(struct sockaddr))) {
+  if (bind(fd, (struct sockaddr *)&my_addr, sizeof(my_addr))) {
     perror("bind");
-    return;
+    exit(1);
   }
   if (listen(fd, 10)) {
     perror("listen");
-    return;
+    exit(2);
   }
   isValid = true;
 }
